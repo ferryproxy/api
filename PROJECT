@@ -1,6 +1,7 @@
 domain: zsm.io
 layout:
 - go.kubebuilder.io/v3
+multigroup: true
 projectName: api
 repo: github.com/ferry-proxy/api
 version: "3"
