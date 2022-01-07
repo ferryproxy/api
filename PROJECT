@@ -4,4 +4,14 @@ layout:
 multigroup: true
 projectName: api
 repo: github.com/ferry-proxy/api
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: zsm.io
+  group: ferry
+  kind: ClusterInformation
+  path: github.com/ferry-proxy/api/apis/ferry/v1alpha1
+  version: v1alpha1
 version: "3"
