@@ -36,13 +36,67 @@ spec:
           spec:
             description: FerryPolicySpec defines the desired state of FerryPolicy
             properties:
-              foo:
-                description: Foo is an example field of FerryPolicy. Edit ferrypolicy_types.go
-                  to remove/update
-                type: string
+              rules:
+                items:
+                  description: FerryPolicySpecRule defines the desired rule of FerryPolicyRule
+                  properties:
+                    exports:
+                      description: Exports is a list of exports of the FerryPolicy.
+                      items:
+                        description: FerryPolicySpecRuleExport defines the desired
+                          export of FerryPolicyRule
+                        properties:
+                          clusterName:
+                            type: string
+                          match:
+                            description: Match defines the desired match of FerryPolicyRule
+                            properties:
+                              labels:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                              namespace:
+                                type: string
+                            type: object
+                        required:
+                        - clusterName
+                        type: object
+                      type: array
+                    imports:
+                      description: Imports is a list of imports of the FerryPolicy.
+                      items:
+                        description: FerryPolicySpecRuleImport defines the desired
+                          import of FerryPolicyRule
+                        properties:
+                          clusterName:
+                            type: string
+                          match:
+                            description: Match defines the desired match of FerryPolicyRule
+                            properties:
+                              labels:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                              namespace:
+                                type: string
+                            type: object
+                        required:
+                        - clusterName
+                        type: object
+                      type: array
+                  required:
+                  - exports
+                  - imports
+                  type: object
+                type: array
+            required:
+            - rules
             type: object
           status:
             description: FerryPolicyStatus defines the observed state of FerryPolicy
+            properties:
+              ready:
+                type: boolean
             type: object
         type: object
     served: true

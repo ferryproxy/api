@@ -25,17 +25,38 @@ import (
 
 // FerryPolicySpec defines the desired state of FerryPolicy
 type FerryPolicySpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Rules []FerryPolicySpecRule `json:"rules"`
+}
 
-	// Foo is an example field of FerryPolicy. Edit ferrypolicy_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+// FerryPolicySpecRule defines the desired rule of FerryPolicyRule
+type FerryPolicySpecRule struct {
+	// Exports is a list of exports of the FerryPolicy.
+	Exports []FerryPolicySpecRuleExport `json:"exports"`
+	// Imports is a list of imports of the FerryPolicy.
+	Imports []FerryPolicySpecRuleImport `json:"imports"`
+}
+
+// FerryPolicySpecRuleExport defines the desired export of FerryPolicyRule
+type FerryPolicySpecRuleExport struct {
+	ClusterName string `json:"clusterName"`
+	Match       *Match `json:"match,omitempty"`
+}
+
+// FerryPolicySpecRuleImport defines the desired import of FerryPolicyRule
+type FerryPolicySpecRuleImport struct {
+	ClusterName string `json:"clusterName"`
+	Match       *Match `json:"match,omitempty"`
+}
+
+// Match defines the desired match of FerryPolicyRule
+type Match struct {
+	Labels    map[string]string `json:"labels,omitempty"`
+	Namespace string            `json:"namespace,omitempty"`
 }
 
 // FerryPolicyStatus defines the observed state of FerryPolicy
 type FerryPolicyStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Ready bool `json:"ready,omitempty"`
 }
 
 // +genclient

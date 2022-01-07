@@ -37,13 +37,51 @@ spec:
           spec:
             description: ClusterInformationSpec defines the desired state of ClusterInformation
             properties:
-              foo:
-                description: Foo is an example field of ClusterInformation. Edit clusterinformation_types.go
-                  to remove/update
+              egress:
+                properties:
+                  ip:
+                    type: string
+                  port:
+                    format: int32
+                    type: integer
+                  serviceName:
+                    type: string
+                  serviceNamespace:
+                    type: string
+                required:
+                - port
+                type: object
+              ingress:
+                properties:
+                  ip:
+                    type: string
+                  port:
+                    format: int32
+                    type: integer
+                  serviceName:
+                    type: string
+                  serviceNamespace:
+                    type: string
+                required:
+                - port
+                type: object
+              kubeconfig:
+                format: byte
                 type: string
+            required:
+            - kubeconfig
             type: object
           status:
             description: ClusterInformationStatus defines the observed state of ClusterInformation
+            properties:
+              exportTo:
+                items:
+                  type: string
+                type: array
+              importFrom:
+                items:
+                  type: string
+                type: array
             type: object
         type: object
     served: true

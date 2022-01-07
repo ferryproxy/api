@@ -25,17 +25,22 @@ import (
 
 // ClusterInformationSpec defines the desired state of ClusterInformation
 type ClusterInformationSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of ClusterInformation. Edit clusterinformation_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Kubeconfig []byte                       `json:"kubeconfig"`
+	Ingress    *ClusterInformationSpecRoute `json:"ingress,omitempty"`
+	Egress     *ClusterInformationSpecRoute `json:"egress,omitempty"`
 }
 
 // ClusterInformationStatus defines the observed state of ClusterInformation
 type ClusterInformationStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	ExportTo   []string `json:"exportTo,omitempty"`
+	ImportFrom []string `json:"importFrom,omitempty"`
+}
+
+type ClusterInformationSpecRoute struct {
+	Port             int32   `json:"port"`
+	IP               *string `json:"ip,omitempty"`
+	ServiceName      *string `json:"serviceName,omitempty"`
+	ServiceNamespace *string `json:"serviceNamespace,omitempty"`
 }
 
 // +genclient
