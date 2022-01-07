@@ -1,0 +1,6 @@
+domain: zsm.io
+layout:
+- go.kubebuilder.io/v3
+projectName: api
+repo: github.com/ferry-proxy/api
+version: "3"
