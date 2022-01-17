@@ -20,27 +20,60 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // ClusterInformationSpec defines the desired state of ClusterInformation
 type ClusterInformationSpec struct {
-	Kubeconfig []byte                       `json:"kubeconfig"`
-	Ingress    *ClusterInformationSpecRoute `json:"ingress,omitempty"`
-	Egress     *ClusterInformationSpecRoute `json:"egress,omitempty"`
+	// Kubeconfig is the kubeconfig of the cluster,
+	// cannot be specified together with InCluster.
+	Kubeconfig []byte `json:"kubeconfig,omitempty"`
+	// InCluster indicates whether the cluster is itself cluster,
+	// cannot be specified together with Kubeconfig.
+	InCluster bool `json:"inCluster,omitempty"`
+	// Ingress is the ingress of the cluster.
+	Ingress *ClusterInformationSpecRoute `json:"ingress,omitempty"`
+	// Egress is the egress of the cluster.
+	Egress *ClusterInformationSpecRoute `json:"egress,omitempty"`
 }
 
 // ClusterInformationStatus defines the observed state of ClusterInformation
 type ClusterInformationStatus struct {
-	ExportTo   []string `json:"exportTo,omitempty"`
-	ImportFrom []string `json:"importFrom,omitempty"`
+	// ExportedTo is the list of the cluster information exported to.
+	ExportedTo []string `json:"exportedTo,omitempty"`
+	// ImportedFrom is the list of the cluster information imported from.
+	ImportedFrom []string `json:"importedFrom,omitempty"`
+	// Conditions current service state
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+// ClusterInformationSpecRoute defines the desired state of ClusterInformation
 type ClusterInformationSpecRoute struct {
-	Port             int32   `json:"port"`
-	IP               *string `json:"ip,omitempty"`
-	ServiceName      *string `json:"serviceName,omitempty"`
-	ServiceNamespace *string `json:"serviceNamespace,omitempty"`
+	// Port is the port to expose.
+	Port int32 `json:"port"`
+	// IP is the IP address to expose.
+	// cannot be specified together with ServiceName and ServiceNamespace.
+	IP string `json:"ip,omitempty"`
+	// ServiceName is the name of the service to expose.
+	// cannot be specified together with IP.
+	ServiceName string `json:"serviceName,omitempty"`
+	// ServiceNamespace is the namespace of the service to expose.
+	// cannot be specified together with IP.
+	ServiceNamespace string `json:"serviceNamespace,omitempty"`
+	// Proxies is a list of proxies to use for the route
+	Proxies map[string]Proxies `json:"proxies,omitempty"`
+	// DefaultProxies is a default list of proxies to use for the route
+	DefaultProxies Proxies `json:"defaultProxies,omitempty"`
+}
+
+// Proxies defines the desired state of ClusterInformationSpecRoute
+type Proxies []Proxy
+
+// Proxy defines the desired state of ClusterInformationSpecRoute
+type Proxy struct {
+	// ClusterName is the name of the cluster to proxy to.
+	// cannot be specified together with Proxy.
+	ClusterName string `json:"clusterName,omitempty"`
+	// Proxy is the proxy to use.
+	// cannot be specified together with ClusterName.
+	Proxy string `json:"proxy,omitempty"`
 }
 
 // +genclient
