@@ -20,15 +20,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // FerryPolicySpec defines the desired state of FerryPolicy
 type FerryPolicySpec struct {
 	Rules []FerryPolicySpecRule `json:"rules"`
 }
 
 // FerryPolicySpecRule defines the desired rule of FerryPolicyRule
+// Service mapping from Exports cluster to Imports cluster
 type FerryPolicySpecRule struct {
 	// Exports is a list of exports of the FerryPolicy.
 	Exports []FerryPolicySpecRuleExport `json:"exports"`
@@ -38,25 +36,36 @@ type FerryPolicySpecRule struct {
 
 // FerryPolicySpecRuleExport defines the desired export of FerryPolicyRule
 type FerryPolicySpecRuleExport struct {
+	// ClusterName is specifies the name of the cluster
 	ClusterName string `json:"clusterName"`
-	Match       *Match `json:"match,omitempty"`
+	// Match is specifies the service of matched
+	Match Match `json:"match,omitempty"`
 }
 
 // FerryPolicySpecRuleImport defines the desired import of FerryPolicyRule
 type FerryPolicySpecRuleImport struct {
+	// ClusterName is specifies the name of the cluster
 	ClusterName string `json:"clusterName"`
-	Match       *Match `json:"match,omitempty"`
+	// Match is specifies the service of matched
+	Match Match `json:"match,omitempty"`
 }
 
 // Match defines the desired match of FerryPolicyRule
 type Match struct {
-	Labels    map[string]string `json:"labels,omitempty"`
-	Namespace string            `json:"namespace,omitempty"`
+	// Labels is specifies the labels of matched
+	// cannot be specified together with Name
+	Labels map[string]string `json:"labels,omitempty"`
+	// Namespace is specifies the namespace of matched
+	Namespace string `json:"namespace,omitempty"`
+	// Name is specifies the name of matched
+	// cannot be specified together with Labels
+	Name string `json:"name,omitempty"`
 }
 
 // FerryPolicyStatus defines the observed state of FerryPolicy
 type FerryPolicyStatus struct {
-	Ready bool `json:"ready,omitempty"`
+	// Conditions current service state
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
 // +genclient
