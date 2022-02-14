@@ -90,8 +90,6 @@ spec:
                     description: ServiceNamespace is the namespace of the service
                       to expose. cannot be specified together with IP.
                     type: string
-                required:
-                - port
                 type: object
               inCluster:
                 description: InCluster indicates whether the cluster is itself cluster,
@@ -150,8 +148,6 @@ spec:
                     description: ServiceNamespace is the namespace of the service
                       to expose. cannot be specified together with IP.
                     type: string
-                required:
-                - port
                 type: object
               kubeconfig:
                 description: Kubeconfig is the kubeconfig of the cluster, cannot be

@@ -47,7 +47,7 @@ type ClusterInformationStatus struct {
 // ClusterInformationSpecRoute defines the desired state of ClusterInformation
 type ClusterInformationSpecRoute struct {
 	// Port is the port to expose.
-	Port int32 `json:"port"`
+	Port int32 `json:"port,omitempty"`
 	// IP is the IP address to expose.
 	// cannot be specified together with ServiceName and ServiceNamespace.
 	IP string `json:"ip,omitempty"`
