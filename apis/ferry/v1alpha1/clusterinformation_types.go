@@ -25,9 +25,6 @@ type ClusterInformationSpec struct {
 	// Kubeconfig is the kubeconfig of the cluster,
 	// cannot be specified together with InCluster.
 	Kubeconfig []byte `json:"kubeconfig,omitempty"`
-	// InCluster indicates whether the cluster is itself cluster,
-	// cannot be specified together with Kubeconfig.
-	InCluster bool `json:"inCluster,omitempty"`
 	// Ingress is the ingress of the cluster.
 	Ingress *ClusterInformationSpecRoute `json:"ingress,omitempty"`
 	// Egress is the egress of the cluster.
@@ -40,6 +37,10 @@ type ClusterInformationStatus struct {
 	ExportedTo []string `json:"exportedTo,omitempty"`
 	// ImportedFrom is the list of the cluster information imported from.
 	ImportedFrom []string `json:"importedFrom,omitempty"`
+	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
+	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+	// Mode is the mode of the cluster information.
+	Mode string `json:"mode,omitempty"`
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
@@ -79,6 +80,11 @@ type Proxy struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="exported-to",type="string",JSONPath=".status.exportedTo"
+//+kubebuilder:printcolumn:name="imported-from",type="string",JSONPath=".status.importedFrom"
+//+kubebuilder:printcolumn:name="mode",type="string",JSONPath=".status.mode"
+//+kubebuilder:printcolumn:name="last-synchronization",type="string",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // ClusterInformation is the Schema for the clusterinformations API
 type ClusterInformation struct {

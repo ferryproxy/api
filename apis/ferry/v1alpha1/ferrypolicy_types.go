@@ -64,6 +64,8 @@ type Match struct {
 
 // FerryPolicyStatus defines the observed state of FerryPolicy
 type FerryPolicyStatus struct {
+	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
+	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
@@ -71,6 +73,8 @@ type FerryPolicyStatus struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="last-synchronization",type="string",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // FerryPolicy is the Schema for the ferrypolicies API
 type FerryPolicy struct {

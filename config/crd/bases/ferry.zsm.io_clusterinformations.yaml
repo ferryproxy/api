@@ -16,7 +16,23 @@ spec:
     singular: clusterinformation
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .status.exportedTo
+      name: exported-to
+      type: string
+    - jsonPath: .status.importedFrom
+      name: imported-from
+      type: string
+    - jsonPath: .status.mode
+      name: mode
+      type: string
+    - jsonPath: .status.lastSynchronizationTimestamp
+      name: last-synchronization
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: age
+      type: date
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: ClusterInformation is the Schema for the clusterinformations
@@ -91,10 +107,6 @@ spec:
                       to expose. cannot be specified together with IP.
                     type: string
                 type: object
-              inCluster:
-                description: InCluster indicates whether the cluster is itself cluster,
-                  cannot be specified together with Kubeconfig.
-                type: boolean
               ingress:
                 description: Ingress is the ingress of the cluster.
                 properties:
@@ -240,6 +252,14 @@ spec:
                 items:
                   type: string
                 type: array
+              lastSynchronizationTimestamp:
+                description: LastSynchronizationTimestamp is the last time synchronization
+                  to the cluster.
+                format: date-time
+                type: string
+              mode:
+                description: Mode is the mode of the cluster information.
+                type: string
             type: object
         type: object
     served: true
