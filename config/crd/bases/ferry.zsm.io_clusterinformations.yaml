@@ -96,10 +96,7 @@ spec:
                       type: object
                     type: array
                 required:
-                - address
-                - navigation
                 - reachable
-                - reception
                 type: object
               kubeconfig:
                 description: Kubeconfig is the kubeconfig of the cluster, cannot be
@@ -151,10 +148,7 @@ spec:
                         type: object
                       type: array
                   required:
-                  - address
-                  - navigation
                   - reachable
-                  - reception
                   type: object
                 description: Override is will replace the default gateway that will
                   reach the target

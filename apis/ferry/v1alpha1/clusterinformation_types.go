@@ -50,11 +50,11 @@ type ClusterInformationSpecGateway struct {
 	// Reachable indicates that this cluster is reachable, the default unreachable.
 	Reachable bool `json:"reachable"`
 	// Address is the address of the cluster.
-	Address string `json:"address"`
+	Address string `json:"address,omitempty"`
 	// Navigation is the navigation of the cluster.
-	Navigation ClusterInformationSpecGatewayWays `json:"navigation"`
+	Navigation ClusterInformationSpecGatewayWays `json:"navigation,omitempty"`
 	// Reception is the reception of the cluster.
-	Reception ClusterInformationSpecGatewayWays `json:"reception"`
+	Reception ClusterInformationSpecGatewayWays `json:"reception,omitempty"`
 }
 
 // ClusterInformationSpecGatewayWays defines the desired state of ClusterInformationSpecGateway
