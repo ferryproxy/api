@@ -25,10 +25,10 @@ type ClusterInformationSpec struct {
 	// Kubeconfig is the kubeconfig of the cluster,
 	// cannot be specified together with InCluster.
 	Kubeconfig []byte `json:"kubeconfig,omitempty"`
-	// Ingress is the ingress of the cluster.
-	Ingress *ClusterInformationSpecRoute `json:"ingress,omitempty"`
-	// Egress is the egress of the cluster.
-	Egress *ClusterInformationSpecRoute `json:"egress,omitempty"`
+	// Gateway is the default gateway of the cluster.
+	Gateway ClusterInformationSpecGateway `json:"gateway"`
+	// Override is will replace the default gateway that will reach the target
+	Override map[string]ClusterInformationSpecGateway `json:"override,omitempty"`
 }
 
 // ClusterInformationStatus defines the observed state of ClusterInformation
@@ -39,36 +39,29 @@ type ClusterInformationStatus struct {
 	ImportedFrom []string `json:"importedFrom,omitempty"`
 	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
 	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
-	// Mode is the mode of the cluster information.
-	Mode string `json:"mode,omitempty"`
+	// Phase is the phase of the cluster information.
+	Phase string `json:"phase,omitempty"`
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
-// ClusterInformationSpecRoute defines the desired state of ClusterInformation
-type ClusterInformationSpecRoute struct {
-	// Port is the port to expose.
-	Port int32 `json:"port,omitempty"`
-	// IP is the IP address to expose.
-	// cannot be specified together with ServiceName and ServiceNamespace.
-	IP string `json:"ip,omitempty"`
-	// ServiceName is the name of the service to expose.
-	// cannot be specified together with IP.
-	ServiceName string `json:"serviceName,omitempty"`
-	// ServiceNamespace is the namespace of the service to expose.
-	// cannot be specified together with IP.
-	ServiceNamespace string `json:"serviceNamespace,omitempty"`
-	// Proxies is a list of proxies to use for the route
-	Proxies map[string]Proxies `json:"proxies,omitempty"`
-	// DefaultProxies is a default list of proxies to use for the route
-	DefaultProxies Proxies `json:"defaultProxies,omitempty"`
+// ClusterInformationSpecGateway defines the desired state of ClusterInformation
+type ClusterInformationSpecGateway struct {
+	// Reachable indicates that this cluster is reachable, the default unreachable.
+	Reachable bool `json:"reachable"`
+	// Address is the address of the cluster.
+	Address string `json:"address"`
+	// Navigation is the navigation of the cluster.
+	Navigation ClusterInformationSpecGatewayWays `json:"navigation"`
+	// Reception is the reception of the cluster.
+	Reception ClusterInformationSpecGatewayWays `json:"reception"`
 }
 
-// Proxies defines the desired state of ClusterInformationSpecRoute
-type Proxies []Proxy
+// ClusterInformationSpecGatewayWays defines the desired state of ClusterInformationSpecGateway
+type ClusterInformationSpecGatewayWays []ClusterInformationSpecGatewayWay
 
-// Proxy defines the desired state of ClusterInformationSpecRoute
-type Proxy struct {
+// ClusterInformationSpecGatewayWay defines the desired state of ClusterInformationSpecGateway
+type ClusterInformationSpecGatewayWay struct {
 	// ClusterName is the name of the cluster to proxy to.
 	// cannot be specified together with Proxy.
 	ClusterName string `json:"clusterName,omitempty"`
@@ -82,7 +75,7 @@ type Proxy struct {
 //+kubebuilder:subresource:status
 //+kubebuilder:printcolumn:name="exported-to",type="string",JSONPath=".status.exportedTo"
 //+kubebuilder:printcolumn:name="imported-from",type="string",JSONPath=".status.importedFrom"
-//+kubebuilder:printcolumn:name="mode",type="string",JSONPath=".status.mode"
+//+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
 //+kubebuilder:printcolumn:name="last-synchronization",type="string",JSONPath=".status.lastSynchronizationTimestamp"
 //+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 

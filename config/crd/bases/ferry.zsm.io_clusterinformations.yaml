@@ -23,8 +23,8 @@ spec:
     - jsonPath: .status.importedFrom
       name: imported-from
       type: string
-    - jsonPath: .status.mode
-      name: mode
+    - jsonPath: .status.phase
+      name: status
       type: string
     - jsonPath: .status.lastSynchronizationTimestamp
       name: last-synchronization
@@ -53,14 +53,17 @@ spec:
           spec:
             description: ClusterInformationSpec defines the desired state of ClusterInformation
             properties:
-              egress:
-                description: Egress is the egress of the cluster.
+              gateway:
+                description: Gateway is the default gateway of the cluster.
                 properties:
-                  defaultProxies:
-                    description: DefaultProxies is a default list of proxies to use
-                      for the route
+                  address:
+                    description: Address is the address of the cluster.
+                    type: string
+                  navigation:
+                    description: Navigation is the navigation of the cluster.
                     items:
-                      description: Proxy defines the desired state of ClusterInformationSpecRoute
+                      description: ClusterInformationSpecGatewayWay defines the desired
+                        state of ClusterInformationSpecGateway
                       properties:
                         clusterName:
                           description: ClusterName is the name of the cluster to proxy
@@ -72,49 +75,15 @@ spec:
                           type: string
                       type: object
                     type: array
-                  ip:
-                    description: IP is the IP address to expose. cannot be specified
-                      together with ServiceName and ServiceNamespace.
-                    type: string
-                  port:
-                    description: Port is the port to expose.
-                    format: int32
-                    type: integer
-                  proxies:
-                    additionalProperties:
-                      description: Proxies defines the desired state of ClusterInformationSpecRoute
-                      items:
-                        description: Proxy defines the desired state of ClusterInformationSpecRoute
-                        properties:
-                          clusterName:
-                            description: ClusterName is the name of the cluster to
-                              proxy to. cannot be specified together with Proxy.
-                            type: string
-                          proxy:
-                            description: Proxy is the proxy to use. cannot be specified
-                              together with ClusterName.
-                            type: string
-                        type: object
-                      type: array
-                    description: Proxies is a list of proxies to use for the route
-                    type: object
-                  serviceName:
-                    description: ServiceName is the name of the service to expose.
-                      cannot be specified together with IP.
-                    type: string
-                  serviceNamespace:
-                    description: ServiceNamespace is the namespace of the service
-                      to expose. cannot be specified together with IP.
-                    type: string
-                type: object
-              ingress:
-                description: Ingress is the ingress of the cluster.
-                properties:
-                  defaultProxies:
-                    description: DefaultProxies is a default list of proxies to use
-                      for the route
+                  reachable:
+                    description: Reachable indicates that this cluster is reachable,
+                      the default unreachable.
+                    type: boolean
+                  reception:
+                    description: Reception is the reception of the cluster.
                     items:
-                      description: Proxy defines the desired state of ClusterInformationSpecRoute
+                      description: ClusterInformationSpecGatewayWay defines the desired
+                        state of ClusterInformationSpecGateway
                       properties:
                         clusterName:
                           description: ClusterName is the name of the cluster to proxy
@@ -126,46 +95,72 @@ spec:
                           type: string
                       type: object
                     type: array
-                  ip:
-                    description: IP is the IP address to expose. cannot be specified
-                      together with ServiceName and ServiceNamespace.
-                    type: string
-                  port:
-                    description: Port is the port to expose.
-                    format: int32
-                    type: integer
-                  proxies:
-                    additionalProperties:
-                      description: Proxies defines the desired state of ClusterInformationSpecRoute
-                      items:
-                        description: Proxy defines the desired state of ClusterInformationSpecRoute
-                        properties:
-                          clusterName:
-                            description: ClusterName is the name of the cluster to
-                              proxy to. cannot be specified together with Proxy.
-                            type: string
-                          proxy:
-                            description: Proxy is the proxy to use. cannot be specified
-                              together with ClusterName.
-                            type: string
-                        type: object
-                      type: array
-                    description: Proxies is a list of proxies to use for the route
-                    type: object
-                  serviceName:
-                    description: ServiceName is the name of the service to expose.
-                      cannot be specified together with IP.
-                    type: string
-                  serviceNamespace:
-                    description: ServiceNamespace is the namespace of the service
-                      to expose. cannot be specified together with IP.
-                    type: string
+                required:
+                - address
+                - navigation
+                - reachable
+                - reception
                 type: object
               kubeconfig:
                 description: Kubeconfig is the kubeconfig of the cluster, cannot be
                   specified together with InCluster.
                 format: byte
                 type: string
+              override:
+                additionalProperties:
+                  description: ClusterInformationSpecGateway defines the desired state
+                    of ClusterInformation
+                  properties:
+                    address:
+                      description: Address is the address of the cluster.
+                      type: string
+                    navigation:
+                      description: Navigation is the navigation of the cluster.
+                      items:
+                        description: ClusterInformationSpecGatewayWay defines the
+                          desired state of ClusterInformationSpecGateway
+                        properties:
+                          clusterName:
+                            description: ClusterName is the name of the cluster to
+                              proxy to. cannot be specified together with Proxy.
+                            type: string
+                          proxy:
+                            description: Proxy is the proxy to use. cannot be specified
+                              together with ClusterName.
+                            type: string
+                        type: object
+                      type: array
+                    reachable:
+                      description: Reachable indicates that this cluster is reachable,
+                        the default unreachable.
+                      type: boolean
+                    reception:
+                      description: Reception is the reception of the cluster.
+                      items:
+                        description: ClusterInformationSpecGatewayWay defines the
+                          desired state of ClusterInformationSpecGateway
+                        properties:
+                          clusterName:
+                            description: ClusterName is the name of the cluster to
+                              proxy to. cannot be specified together with Proxy.
+                            type: string
+                          proxy:
+                            description: Proxy is the proxy to use. cannot be specified
+                              together with ClusterName.
+                            type: string
+                        type: object
+                      type: array
+                  required:
+                  - address
+                  - navigation
+                  - reachable
+                  - reception
+                  type: object
+                description: Override is will replace the default gateway that will
+                  reach the target
+                type: object
+            required:
+            - gateway
             type: object
           status:
             description: ClusterInformationStatus defines the observed state of ClusterInformation
@@ -257,8 +252,8 @@ spec:
                   to the cluster.
                 format: date-time
                 type: string
-              mode:
-                description: Mode is the mode of the cluster information.
+              phase:
+                description: Phase is the phase of the cluster information.
                 type: string
             type: object
         type: object
