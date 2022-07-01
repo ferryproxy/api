@@ -23,4 +23,13 @@ resources:
   kind: FerryPolicy
   path: github.com/ferry-proxy/api/apis/ferry/v1alpha1
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: zsm.io
+  group: ferry
+  kind: MappingRule
+  path: github.com/ferry-proxy/api/apis/ferry/v1alpha1
+  version: v1alpha1
 version: "3"
