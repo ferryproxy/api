@@ -6,23 +6,17 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
-  name: clusterinformations.ferry.zsm.io
+  name: mappingrules.ferry.zsm.io
 spec:
   group: ferry.zsm.io
   names:
-    kind: ClusterInformation
-    listKind: ClusterInformationList
-    plural: clusterinformations
-    singular: clusterinformation
+    kind: MappingRule
+    listKind: MappingRuleList
+    plural: mappingrules
+    singular: mappingrule
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.exportedTo
-      name: exported-to
-      type: string
-    - jsonPath: .status.importedFrom
-      name: imported-from
-      type: string
     - jsonPath: .status.phase
       name: status
       type: string
@@ -35,8 +29,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ClusterInformation is the Schema for the clusterinformations
-          API
+        description: MappingRule is the Schema for the mappingrules API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,113 +44,60 @@ spec:
           metadata:
             type: object
           spec:
-            description: ClusterInformationSpec defines the desired state of ClusterInformation
+            description: MappingRuleSpec defines the desired state of MappingRule
             properties:
-              gateway:
-                description: Gateway is the default gateway of the cluster.
+              export:
+                description: Export is one of export of the  MappingRule.
                 properties:
-                  address:
-                    description: Address is the address of the cluster.
+                  clusterName:
+                    description: ClusterName is specifies the name of the cluster
                     type: string
-                  navigation:
-                    description: Navigation is the navigation of the cluster.
-                    items:
-                      description: ClusterInformationSpecGatewayWay defines the desired
-                        state of ClusterInformationSpecGateway
-                      properties:
-                        clusterName:
-                          description: ClusterName is the name of the cluster to proxy
-                            to. cannot be specified together with Proxy.
-                          type: string
-                        proxy:
-                          description: Proxy is the proxy to use. cannot be specified
-                            together with ClusterName.
-                          type: string
-                      type: object
-                    type: array
-                  reachable:
-                    description: Reachable indicates that this cluster is reachable,
-                      the default unreachable.
-                    type: boolean
-                  reception:
-                    description: Reception is the reception of the cluster.
-                    items:
-                      description: ClusterInformationSpecGatewayWay defines the desired
-                        state of ClusterInformationSpecGateway
-                      properties:
-                        clusterName:
-                          description: ClusterName is the name of the cluster to proxy
-                            to. cannot be specified together with Proxy.
-                          type: string
-                        proxy:
-                          description: Proxy is the proxy to use. cannot be specified
-                            together with ClusterName.
-                          type: string
-                      type: object
-                    type: array
+                  service:
+                    description: Service is the service
+                    properties:
+                      name:
+                        description: Name is the service name.
+                        type: string
+                      namespace:
+                        description: Namespace is the service namespace.
+                        type: string
+                    required:
+                    - name
+                    - namespace
+                    type: object
                 required:
-                - reachable
+                - clusterName
+                - service
                 type: object
-              kubeconfig:
-                description: Kubeconfig is the kubeconfig of the cluster, cannot be
-                  specified together with InCluster.
-                format: byte
-                type: string
-              override:
-                additionalProperties:
-                  description: ClusterInformationSpecGateway defines the desired state
-                    of ClusterInformation
-                  properties:
-                    address:
-                      description: Address is the address of the cluster.
-                      type: string
-                    navigation:
-                      description: Navigation is the navigation of the cluster.
-                      items:
-                        description: ClusterInformationSpecGatewayWay defines the
-                          desired state of ClusterInformationSpecGateway
-                        properties:
-                          clusterName:
-                            description: ClusterName is the name of the cluster to
-                              proxy to. cannot be specified together with Proxy.
-                            type: string
-                          proxy:
-                            description: Proxy is the proxy to use. cannot be specified
-                              together with ClusterName.
-                            type: string
-                        type: object
-                      type: array
-                    reachable:
-                      description: Reachable indicates that this cluster is reachable,
-                        the default unreachable.
-                      type: boolean
-                    reception:
-                      description: Reception is the reception of the cluster.
-                      items:
-                        description: ClusterInformationSpecGatewayWay defines the
-                          desired state of ClusterInformationSpecGateway
-                        properties:
-                          clusterName:
-                            description: ClusterName is the name of the cluster to
-                              proxy to. cannot be specified together with Proxy.
-                            type: string
-                          proxy:
-                            description: Proxy is the proxy to use. cannot be specified
-                              together with ClusterName.
-                            type: string
-                        type: object
-                      type: array
-                  required:
-                  - reachable
-                  type: object
-                description: Override is will replace the default gateway that will
-                  reach the target
+              import:
+                description: Import is one of import of the  MappingRule.
+                properties:
+                  clusterName:
+                    description: ClusterName is specifies the name of the cluster
+                    type: string
+                  service:
+                    description: Service is the service
+                    properties:
+                      name:
+                        description: Name is the service name.
+                        type: string
+                      namespace:
+                        description: Namespace is the service namespace.
+                        type: string
+                    required:
+                    - name
+                    - namespace
+                    type: object
+                required:
+                - clusterName
+                - service
                 type: object
             required:
-            - gateway
+            - export
+            - import
             type: object
           status:
-            description: ClusterInformationStatus defines the observed state of ClusterInformation
+            description: MappingRuleStatus defines the observed state of MappingRule
             properties:
               conditions:
                 description: Conditions current service state
@@ -229,25 +169,13 @@ spec:
                   - type
                   type: object
                 type: array
-              exportedTo:
-                description: ExportedTo is the list of the cluster information exported
-                  to.
-                items:
-                  type: string
-                type: array
-              importedFrom:
-                description: ImportedFrom is the list of the cluster information imported
-                  from.
-                items:
-                  type: string
-                type: array
               lastSynchronizationTimestamp:
                 description: LastSynchronizationTimestamp is the last time synchronization
                   to the cluster.
                 format: date-time
                 type: string
               phase:
-                description: Phase is the phase of the cluster information.
+                description: Phase is the phase of the mapping rule.
                 type: string
             type: object
         type: object

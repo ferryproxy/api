@@ -58,3 +58,29 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - ferry.zsm.io
+  resources:
+  - mappingrules
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ferry.zsm.io
+  resources:
+  - mappingrules/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - ferry.zsm.io
+  resources:
+  - mappingrules/status
+  verbs:
+  - get
+  - patch
+  - update

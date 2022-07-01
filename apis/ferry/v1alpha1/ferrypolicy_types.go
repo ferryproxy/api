@@ -25,7 +25,7 @@ type FerryPolicySpec struct {
 	Rules []FerryPolicySpecRule `json:"rules"`
 }
 
-// FerryPolicySpecRule defines the desired rule of FerryPolicyRule
+// FerryPolicySpecRule defines the desired rule of FerryPolicySpec
 // Service mapping from Exports cluster to Imports cluster
 type FerryPolicySpecRule struct {
 	// Exports is a list of exports of the FerryPolicy.
@@ -34,24 +34,24 @@ type FerryPolicySpecRule struct {
 	Imports []FerryPolicySpecRuleImport `json:"imports"`
 }
 
-// FerryPolicySpecRuleExport defines the desired export of FerryPolicyRule
+// FerryPolicySpecRuleExport defines the desired export of FerryPolicySpecRule
 type FerryPolicySpecRuleExport struct {
 	// ClusterName is specifies the name of the cluster
 	ClusterName string `json:"clusterName"`
 	// Match is specifies the service of matched
-	Match Match `json:"match,omitempty"`
+	Match FerryPolicySpecRuleMatch `json:"match,omitempty"`
 }
 
-// FerryPolicySpecRuleImport defines the desired import of FerryPolicyRule
+// FerryPolicySpecRuleImport defines the desired import of FerryPolicySpecRule
 type FerryPolicySpecRuleImport struct {
 	// ClusterName is specifies the name of the cluster
 	ClusterName string `json:"clusterName"`
 	// Match is specifies the service of matched
-	Match Match `json:"match,omitempty"`
+	Match FerryPolicySpecRuleMatch `json:"match,omitempty"`
 }
 
-// Match defines the desired match of FerryPolicyRule
-type Match struct {
+// FerryPolicySpecRuleMatch defines the desired match of FerryPolicySpecRule
+type FerryPolicySpecRuleMatch struct {
 	// Labels is specifies the labels of matched
 	// cannot be specified together with Name
 	Labels map[string]string `json:"labels,omitempty"`
@@ -64,6 +64,8 @@ type Match struct {
 
 // FerryPolicyStatus defines the observed state of FerryPolicy
 type FerryPolicyStatus struct {
+	// Phase is the phase of the ferry policy.
+	Phase string `json:"phase,omitempty"`
 	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
 	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
 	// Conditions current service state
@@ -73,7 +75,8 @@ type FerryPolicyStatus struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-//+kubebuilder:printcolumn:name="last-synchronization",type="string",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
+//+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
 //+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // FerryPolicy is the Schema for the ferrypolicies API

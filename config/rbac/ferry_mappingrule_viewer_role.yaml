@@ -1,0 +1,20 @@
+# permissions for end users to view mappingrules.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mappingrule-viewer-role
+rules:
+- apiGroups:
+  - ferry.zsm.io
+  resources:
+  - mappingrules
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ferry.zsm.io
+  resources:
+  - mappingrules/status
+  verbs:
+  - get

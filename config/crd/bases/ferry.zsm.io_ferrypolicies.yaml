@@ -17,9 +17,12 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - jsonPath: .status.phase
+      name: status
+      type: string
     - jsonPath: .status.lastSynchronizationTimestamp
       name: last-synchronization
-      type: string
+      type: date
     - jsonPath: .metadata.creationTimestamp
       name: age
       type: date
@@ -45,14 +48,14 @@ spec:
             properties:
               rules:
                 items:
-                  description: FerryPolicySpecRule defines the desired rule of FerryPolicyRule
+                  description: FerryPolicySpecRule defines the desired rule of FerryPolicySpec
                     Service mapping from Exports cluster to Imports cluster
                   properties:
                     exports:
                       description: Exports is a list of exports of the FerryPolicy.
                       items:
                         description: FerryPolicySpecRuleExport defines the desired
-                          export of FerryPolicyRule
+                          export of FerryPolicySpecRule
                         properties:
                           clusterName:
                             description: ClusterName is specifies the name of the
@@ -84,7 +87,7 @@ spec:
                       description: Imports is a list of imports of the FerryPolicy.
                       items:
                         description: FerryPolicySpecRuleImport defines the desired
-                          import of FerryPolicyRule
+                          import of FerryPolicySpecRule
                         properties:
                           clusterName:
                             description: ClusterName is specifies the name of the
@@ -197,6 +200,9 @@ spec:
                 description: LastSynchronizationTimestamp is the last time synchronization
                   to the cluster.
                 format: date-time
+                type: string
+              phase:
+                description: Phase is the phase of the ferry policy.
                 type: string
             type: object
         type: object

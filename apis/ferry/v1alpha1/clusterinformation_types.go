@@ -37,10 +37,10 @@ type ClusterInformationStatus struct {
 	ExportedTo []string `json:"exportedTo,omitempty"`
 	// ImportedFrom is the list of the cluster information imported from.
 	ImportedFrom []string `json:"importedFrom,omitempty"`
-	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
-	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
 	// Phase is the phase of the cluster information.
 	Phase string `json:"phase,omitempty"`
+	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
+	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
@@ -76,7 +76,7 @@ type ClusterInformationSpecGatewayWay struct {
 //+kubebuilder:printcolumn:name="exported-to",type="string",JSONPath=".status.exportedTo"
 //+kubebuilder:printcolumn:name="imported-from",type="string",JSONPath=".status.importedFrom"
 //+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
-//+kubebuilder:printcolumn:name="last-synchronization",type="string",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
 //+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // ClusterInformation is the Schema for the clusterinformations API
