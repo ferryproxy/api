@@ -64,6 +64,8 @@ type FerryPolicySpecRuleMatch struct {
 
 // FerryPolicyStatus defines the observed state of FerryPolicy
 type FerryPolicyStatus struct {
+	// RuleCount is the number of mapping rules in the FerryPolicy
+	RuleCount int `json:"ruleCount,omitempty"`
 	// Phase is the phase of the ferry policy.
 	Phase string `json:"phase,omitempty"`
 	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
@@ -75,6 +77,7 @@ type FerryPolicyStatus struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="rule-count",type="integer",JSONPath=".status.ruleCount"
 //+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
 //+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
 //+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"

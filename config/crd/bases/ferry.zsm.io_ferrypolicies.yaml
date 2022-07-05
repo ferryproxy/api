@@ -17,6 +17,9 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - jsonPath: .status.ruleCount
+      name: rule-count
+      type: integer
     - jsonPath: .status.phase
       name: status
       type: string
@@ -204,6 +207,9 @@ spec:
               phase:
                 description: Phase is the phase of the ferry policy.
                 type: string
+              ruleCount:
+                description: RuleCount is the number of mapping rules in the FerryPolicy
+                type: integer
             type: object
         type: object
     served: true

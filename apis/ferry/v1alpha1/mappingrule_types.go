@@ -46,6 +46,10 @@ type MappingRuleSpecPortsService struct {
 
 // MappingRuleStatus defines the observed state of MappingRule
 type MappingRuleStatus struct {
+	// Export is describe of the export
+	Export string `json:"export,omitempty"`
+	// Import is describe of the import
+	Import string `json:"import,omitempty"`
 	// Phase is the phase of the mapping rule.
 	Phase string `json:"phase,omitempty"`
 	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
@@ -57,6 +61,8 @@ type MappingRuleStatus struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="export",type="string",JSONPath=".status.export"
+//+kubebuilder:printcolumn:name="import",type="string",JSONPath=".status.import"
 //+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
 //+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
 //+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"

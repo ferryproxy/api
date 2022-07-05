@@ -17,6 +17,12 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - jsonPath: .status.export
+      name: export
+      type: string
+    - jsonPath: .status.import
+      name: import
+      type: string
     - jsonPath: .status.phase
       name: status
       type: string
@@ -169,6 +175,12 @@ spec:
                   - type
                   type: object
                 type: array
+              export:
+                description: Export is describe of the export
+                type: string
+              import:
+                description: Import is describe of the import
+                type: string
               lastSynchronizationTimestamp:
                 description: LastSynchronizationTimestamp is the last time synchronization
                   to the cluster.

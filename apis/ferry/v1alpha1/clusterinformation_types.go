@@ -33,10 +33,6 @@ type ClusterInformationSpec struct {
 
 // ClusterInformationStatus defines the observed state of ClusterInformation
 type ClusterInformationStatus struct {
-	// ExportedTo is the list of the cluster information exported to.
-	ExportedTo []string `json:"exportedTo,omitempty"`
-	// ImportedFrom is the list of the cluster information imported from.
-	ImportedFrom []string `json:"importedFrom,omitempty"`
 	// Phase is the phase of the cluster information.
 	Phase string `json:"phase,omitempty"`
 	// LastSynchronizationTimestamp is the last time synchronization to the cluster.
@@ -73,8 +69,6 @@ type ClusterInformationSpecGatewayWay struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-//+kubebuilder:printcolumn:name="exported-to",type="string",JSONPath=".status.exportedTo"
-//+kubebuilder:printcolumn:name="imported-from",type="string",JSONPath=".status.importedFrom"
 //+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
 //+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
 //+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"

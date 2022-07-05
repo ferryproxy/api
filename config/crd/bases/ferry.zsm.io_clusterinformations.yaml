@@ -17,12 +17,6 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.exportedTo
-      name: exported-to
-      type: string
-    - jsonPath: .status.importedFrom
-      name: imported-from
-      type: string
     - jsonPath: .status.phase
       name: status
       type: string
@@ -228,18 +222,6 @@ spec:
                   - status
                   - type
                   type: object
-                type: array
-              exportedTo:
-                description: ExportedTo is the list of the cluster information exported
-                  to.
-                items:
-                  type: string
-                type: array
-              importedFrom:
-                description: ImportedFrom is the list of the cluster information imported
-                  from.
-                items:
-                  type: string
                 type: array
               lastSynchronizationTimestamp:
                 description: LastSynchronizationTimestamp is the last time synchronization
