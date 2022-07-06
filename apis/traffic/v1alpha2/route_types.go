@@ -20,26 +20,52 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // RouteSpec defines the desired state of Route
 type RouteSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of Route. Edit route_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Import is one of import of the Route.
+	Import RouteSpecRule `json:"import"`
+	// Export is one of export of the Route.
+	Export RouteSpecRule `json:"export"`
 }
 
 // RouteStatus defines the observed state of Route
 type RouteStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Export is describe of the export
+	Export string `json:"export,omitempty"`
+	// Import is describe of the import
+	Import string `json:"import,omitempty"`
+	// Phase is the phase of the Route.
+	Phase string `json:"phase,omitempty"`
+	// LastSynchronizationTimestamp is the last time synchronization
+	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+	// Conditions current service state
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+// RouteSpecRule  defines the desired state of RouteSpec
+type RouteSpecRule struct {
+	// HubName is specifies the name of the Hub
+	HubName string `json:"hubName"`
+	// Service is the service
+	Service RouteSpecRuleService `json:"service"`
+}
+
+// RouteSpecRuleService  defines the desired state of RouteSpecRule
+type RouteSpecRuleService struct {
+	// Name is the service name.
+	Name string `json:"name"`
+	// Namespace is the service namespace.
+	Namespace string `json:"namespace"`
+}
+
+// +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="export",type="string",JSONPath=".status.export"
+//+kubebuilder:printcolumn:name="import",type="string",JSONPath=".status.import"
+//+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
+//+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // Route is the Schema for the routes API
 type Route struct {

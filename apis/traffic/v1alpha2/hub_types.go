@@ -20,26 +20,55 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // HubSpec defines the desired state of Hub
 type HubSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of Hub. Edit hub_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Gateway is the default gateway of this Hub.
+	Gateway HubSpecGateway `json:"gateway"`
+	// Override will replace the peer default gateway, key is the peer Hub
+	Override map[string]HubSpecGateway `json:"override,omitempty"`
 }
 
 // HubStatus defines the observed state of Hub
 type HubStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Phase is the phase of the Hub.
+	Phase string `json:"phase,omitempty"`
+	// LastSynchronizationTimestamp is the last time synchronization
+	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+	// Conditions current service state
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+// HubSpecGateway defines the desired state of Hub
+type HubSpecGateway struct {
+	// Reachable indicates that this cluster is reachable, the default unreachable.
+	Reachable bool `json:"reachable"`
+	// Address is the address of the cluster.
+	Address string `json:"address,omitempty"`
+	// Navigation is the navigation of the Hub.
+	Navigation HubSpecGatewayWays `json:"navigation,omitempty"`
+	// Reception is the reception of the Hub.
+	Reception HubSpecGatewayWays `json:"reception,omitempty"`
+}
+
+// HubSpecGatewayWays defines the desired state of HubSpecGateway
+type HubSpecGatewayWays []HubSpecGatewayWay
+
+// HubSpecGatewayWay defines the desired state of HubSpecGateway
+type HubSpecGatewayWay struct {
+	// HubName is the name of Hub to proxy.
+	// cannot be specified together with Proxy.
+	HubName string `json:"hubName,omitempty"`
+	// Proxy is the proxy to use.
+	// cannot be specified together with HubName.
+	Proxy string `json:"proxy,omitempty"`
+}
+
+// +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
+//+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // Hub is the Schema for the hubs API
 type Hub struct {

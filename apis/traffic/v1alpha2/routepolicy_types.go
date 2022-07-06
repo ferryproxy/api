@@ -20,26 +20,51 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // RoutePolicySpec defines the desired state of RoutePolicy
 type RoutePolicySpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of RoutePolicy. Edit routepolicy_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Exports is a list of exports of the RoutePolicy.
+	Exports []RoutePolicySpecRule `json:"exports"`
+	// Imports is a list of imports of the RoutePolicy.
+	Imports []RoutePolicySpecRule `json:"imports"`
 }
 
 // RoutePolicyStatus defines the observed state of RoutePolicy
 type RoutePolicyStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// RouteCount is the number of Route in the RoutePolicy
+	RouteCount int `json:"routeCount,omitempty"`
+	// Phase is the phase of the RoutePolicy.
+	Phase string `json:"phase,omitempty"`
+	// LastSynchronizationTimestamp is the last time synchronization
+	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+	// Conditions current service state
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+// RoutePolicySpecRule defines the desired import of RoutePolicySpec
+type RoutePolicySpecRule struct {
+	// HubName is specifies the name of the Hub
+	HubName string `json:"hubName"`
+	// Service is specifies the service of matched
+	Service RoutePolicySpecRuleService `json:"service,omitempty"`
+}
+
+// RoutePolicySpecRuleService defines the desired match of RoutePolicySpecRule
+type RoutePolicySpecRuleService struct {
+	// Labels is specifies the labels of matched
+	Labels map[string]string `json:"labels,omitempty"`
+	// Namespace is specifies the namespace of matched
+	Namespace string `json:"namespace,omitempty"`
+	// Name is specifies the name of matched
+	Name string `json:"name,omitempty"`
+}
+
+// +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:name="route-count",type="integer",JSONPath=".status.routeCount"
+//+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
+//+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"
+//+kubebuilder:printcolumn:name="age",type="date",JSONPath=".metadata.creationTimestamp"
 
 // RoutePolicy is the Schema for the routepolicies API
 type RoutePolicy struct {
