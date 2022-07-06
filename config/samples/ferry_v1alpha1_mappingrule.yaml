@@ -1,6 +1,0 @@
-apiVersion: ferry.zsm.io/v1alpha1
-kind: MappingRule
-metadata:
-  name: mappingrule-sample
-spec:
-  # TODO(user): Add fields here
