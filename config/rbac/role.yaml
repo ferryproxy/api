@@ -1,4 +1,3 @@
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -7,9 +6,9 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - clusterinformations
+  - hubs
   verbs:
   - create
   - delete
@@ -19,23 +18,23 @@ rules:
   - update
   - watch
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - clusterinformations/finalizers
+  - hubs/finalizers
   verbs:
   - update
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - clusterinformations/status
+  - hubs/status
   verbs:
   - get
   - patch
   - update
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - ferrypolicies
+  - routepolicies
   verbs:
   - create
   - delete
@@ -45,23 +44,23 @@ rules:
   - update
   - watch
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - ferrypolicies/finalizers
+  - routepolicies/finalizers
   verbs:
   - update
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - ferrypolicies/status
+  - routepolicies/status
   verbs:
   - get
   - patch
   - update
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - mappingrules
+  - routes
   verbs:
   - create
   - delete
@@ -71,15 +70,15 @@ rules:
   - update
   - watch
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - mappingrules/finalizers
+  - routes/finalizers
   verbs:
   - update
 - apiGroups:
-  - ferry.zsm.io
+  - traffic.ferry.zsm.io
   resources:
-  - mappingrules/status
+  - routes/status
   verbs:
   - get
   - patch

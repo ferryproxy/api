@@ -1,4 +1,4 @@
-domain: zsm.io
+domain: ferry.zsm.io
 layout:
 - go.kubebuilder.io/v3
 multigroup: true
@@ -9,27 +9,27 @@ resources:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: zsm.io
-  group: ferry
-  kind: ClusterInformation
-  path: github.com/ferry-proxy/api/apis/ferry/v1alpha1
-  version: v1alpha1
+  domain: ferry.zsm.io
+  group: traffic
+  kind: Hub
+  path: github.com/ferry-proxy/api/apis/traffic/v1alpha2
+  version: v1alpha2
 - api:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: zsm.io
-  group: ferry
-  kind: FerryPolicy
-  path: github.com/ferry-proxy/api/apis/ferry/v1alpha1
-  version: v1alpha1
+  domain: ferry.zsm.io
+  group: traffic
+  kind: Route
+  path: github.com/ferry-proxy/api/apis/traffic/v1alpha2
+  version: v1alpha2
 - api:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: zsm.io
-  group: ferry
-  kind: MappingRule
-  path: github.com/ferry-proxy/api/apis/ferry/v1alpha1
-  version: v1alpha1
+  domain: ferry.zsm.io
+  group: traffic
+  kind: RoutePolicy
+  path: github.com/ferry-proxy/api/apis/traffic/v1alpha2
+  version: v1alpha2
 version: "3"

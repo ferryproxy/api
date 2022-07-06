@@ -2,24 +2,24 @@
 # since it depends on service name and namespace that are out of this kustomize package.
 # It should be run by config/default
 resources:
-- bases/ferry.zsm.io_clusterinformations.yaml
-- bases/ferry.zsm.io_ferrypolicies.yaml
-- bases/ferry.zsm.io_mappingrules.yaml
+- bases/traffic.ferry.zsm.io_hubs.yaml
+- bases/traffic.ferry.zsm.io_routes.yaml
+- bases/traffic.ferry.zsm.io_routepolicies.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patchesStrategicMerge:
 # [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix.
 # patches here are for enabling the conversion webhook for each CRD
-#- patches/webhook_in_clusterinformations.yaml
-#- patches/webhook_in_ferrypolicies.yaml
-#- patches/webhook_in_mappingrules.yaml
+#- patches/webhook_in_hubs.yaml
+#- patches/webhook_in_routes.yaml
+#- patches/webhook_in_routepolicies.yaml
 #+kubebuilder:scaffold:crdkustomizewebhookpatch
 
-# [CERTMANAGER] To enable webhook, uncomment all the sections with [CERTMANAGER] prefix.
+# [CERTMANAGER] To enable cert-manager, uncomment all the sections with [CERTMANAGER] prefix.
 # patches here are for enabling the CA injection for each CRD
-#- patches/cainjection_in_clusterinformations.yaml
-#- patches/cainjection_in_ferrypolicies.yaml
-#- patches/cainjection_in_mappingrules.yaml
+#- patches/cainjection_in_hubs.yaml
+#- patches/cainjection_in_routes.yaml
+#- patches/cainjection_in_routepolicies.yaml
 #+kubebuilder:scaffold:crdkustomizecainjectionpatch
 
 # the following config is for teaching kustomize how to do kustomization for CRDs.
