@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package v1alpha2 contains API Schema definitions for the  v1alpha2 API group
+// Package v1alpha2 contains API Schema definitions for the traffic v1alpha2 API group
 //+kubebuilder:object:generate=true
 //+groupName=traffic.ferry.zsm.io
 package v1alpha2
