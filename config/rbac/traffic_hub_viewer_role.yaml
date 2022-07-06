@@ -1,0 +1,20 @@
+# permissions for end users to view hubs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: hub-viewer-role
+rules:
+- apiGroups:
+  - traffic.ferry.zsm.io
+  resources:
+  - hubs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - traffic.ferry.zsm.io
+  resources:
+  - hubs/status
+  verbs:
+  - get

@@ -1,8 +1,35 @@
-domain: zsm.io
+domain: ferry.zsm.io
 layout:
 - go.kubebuilder.io/v3
 multigroup: true
 projectName: api
 repo: github.com/ferry-proxy/api
-resources: []
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: ferry.zsm.io
+  group: traffic
+  kind: Hub
+  path: github.com/ferry-proxy/api/apis/traffic/v1alpha2
+  version: v1alpha2
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: ferry.zsm.io
+  group: traffic
+  kind: Route
+  path: github.com/ferry-proxy/api/apis/traffic/v1alpha2
+  version: v1alpha2
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: ferry.zsm.io
+  group: traffic
+  kind: RoutePolicy
+  path: github.com/ferry-proxy/api/apis/traffic/v1alpha2
+  version: v1alpha2
 version: "3"
