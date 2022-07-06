@@ -1,6 +1,26 @@
 apiVersion: traffic.ferry.zsm.io/v1alpha2
 kind: Hub
 metadata:
-  name: hub-sample
+  name: hub-0
+  namespace: ferry-system
 spec:
-  # TODO(user): Add fields here
+
+  gateway:
+    # This hub is reachable from the gateway.
+    reachable: true
+
+    # Addresses of the gateway.
+    address: hub-host:31087
+
+    # Other hubs need pass through to navigation
+    navigation:
+      - hubName: hub-1
+
+    # This hub need pass through to reception
+    reception:
+      - hubName: hub-1
+
+  #  Override will replace the peer default gateway, key is the peer TrafficHub.
+  override:
+    hub-2:
+      reachable: false

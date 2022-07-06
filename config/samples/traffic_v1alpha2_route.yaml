@@ -2,5 +2,18 @@ apiVersion: traffic.ferry.zsm.io/v1alpha2
 kind: Route
 metadata:
   name: route-sample
+  namespace: ferry-system
 spec:
-  # TODO(user): Add fields here
+  # Export the service service-sample.default.svc to hub-0.
+
+  export:
+    hubName: hub-1
+    service:
+      name: service-sample
+      namespace: default
+
+  import:
+    hubName: hub-0
+    service:
+      name: service-sample
+      namespace: default

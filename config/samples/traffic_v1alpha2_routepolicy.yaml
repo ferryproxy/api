@@ -1,6 +1,25 @@
 apiVersion: traffic.ferry.zsm.io/v1alpha2
 kind: RoutePolicy
 metadata:
-  name: routepolicy-sample
+  name: route-policy-sample
+  namespace: ferry-system
 spec:
-  # TODO(user): Add fields here
+  # This CRD will generate Route for the following services
+
+  exports:
+
+    # Export the service service-sample.default.svc to hub-0.
+    - hubName: hub-1
+      service:
+        name: service-sample
+        namespace: default
+
+    # Export the service that match label app=service-sample in namespace default to hub-0.
+    - hubName: hub-2
+      service:
+        labels:
+          app: service-sample
+        namespace: default
+
+  imports:
+    - hubName: hub-0
