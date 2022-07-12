@@ -5,7 +5,7 @@ metadata:
   name: route-viewer-role
 rules:
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routes
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routes/status
   verbs:

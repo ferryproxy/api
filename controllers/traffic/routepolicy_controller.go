@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Shiming Zhang.
+Copyright 2022 FerryProxy.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	trafficv1alpha2 "github.com/ferry-proxy/api/apis/traffic/v1alpha2"
+	trafficv1alpha2 "github.com/ferryproxy/api/apis/traffic/v1alpha2"
 )
 
 // RoutePolicyReconciler reconciles a RoutePolicy object
@@ -33,9 +33,9 @@ type RoutePolicyReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=traffic.ferry.zsm.io,resources=routepolicies,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=traffic.ferry.zsm.io,resources=routepolicies/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=traffic.ferry.zsm.io,resources=routepolicies/finalizers,verbs=update
+//+kubebuilder:rbac:groups=traffic.ferryproxy.io,resources=routepolicies,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=traffic.ferryproxy.io,resources=routepolicies/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=traffic.ferryproxy.io,resources=routepolicies/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

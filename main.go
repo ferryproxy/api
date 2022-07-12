@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Shiming Zhang.
+Copyright 2022 FerryProxy.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	trafficv1alpha2 "github.com/ferry-proxy/api/apis/traffic/v1alpha2"
-	trafficcontrollers "github.com/ferry-proxy/api/controllers/traffic"
+	trafficv1alpha2 "github.com/ferryproxy/api/apis/traffic/v1alpha2"
+	trafficcontrollers "github.com/ferryproxy/api/controllers/traffic"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -71,7 +71,7 @@ func main() {
 		Port:                   9443,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "9c89bd98.zsm.io",
+		LeaderElectionID:       "9c89bd98.ferryproxy.io",
 		// LeaderElectionReleaseOnCancel defines if the leader should step down voluntarily
 		// when the Manager ends. This requires the binary to immediately end when the
 		// Manager is stopped, otherwise, this setting is unsafe. Setting this significantly

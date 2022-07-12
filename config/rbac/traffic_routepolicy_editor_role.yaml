@@ -5,7 +5,7 @@ metadata:
   name: routepolicy-editor-role
 rules:
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routepolicies
   verbs:
@@ -17,7 +17,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routepolicies/status
   verbs:

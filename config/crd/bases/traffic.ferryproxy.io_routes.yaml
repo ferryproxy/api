@@ -5,17 +5,23 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.9.2
   creationTimestamp: null
-  name: hubs.traffic.ferry.zsm.io
+  name: routes.traffic.ferryproxy.io
 spec:
-  group: traffic.ferry.zsm.io
+  group: traffic.ferryproxy.io
   names:
-    kind: Hub
-    listKind: HubList
-    plural: hubs
-    singular: hub
+    kind: Route
+    listKind: RouteList
+    plural: routes
+    singular: route
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - jsonPath: .status.export
+      name: export
+      type: string
+    - jsonPath: .status.import
+      name: import
+      type: string
     - jsonPath: .status.phase
       name: status
       type: string
@@ -28,7 +34,7 @@ spec:
     name: v1alpha2
     schema:
       openAPIV3Schema:
-        description: Hub is the Schema for the hubs API
+        description: Route is the Schema for the routes API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -43,107 +49,60 @@ spec:
           metadata:
             type: object
           spec:
-            description: HubSpec defines the desired state of Hub
+            description: RouteSpec defines the desired state of Route
             properties:
-              gateway:
-                description: Gateway is the default gateway of this Hub.
+              export:
+                description: Export is one of export of the Route.
                 properties:
-                  address:
-                    description: Address is the address of the cluster.
+                  hubName:
+                    description: HubName is specifies the name of the Hub
                     type: string
-                  navigation:
-                    description: Navigation is the navigation of the Hub.
-                    items:
-                      description: HubSpecGatewayWay defines the desired state of
-                        HubSpecGateway
-                      properties:
-                        hubName:
-                          description: HubName is the name of Hub to proxy. cannot
-                            be specified together with Proxy.
-                          type: string
-                        proxy:
-                          description: Proxy is the proxy to use. cannot be specified
-                            together with HubName.
-                          type: string
-                      type: object
-                    type: array
-                  reachable:
-                    description: Reachable indicates that this cluster is reachable,
-                      the default unreachable.
-                    type: boolean
-                  reception:
-                    description: Reception is the reception of the Hub.
-                    items:
-                      description: HubSpecGatewayWay defines the desired state of
-                        HubSpecGateway
-                      properties:
-                        hubName:
-                          description: HubName is the name of Hub to proxy. cannot
-                            be specified together with Proxy.
-                          type: string
-                        proxy:
-                          description: Proxy is the proxy to use. cannot be specified
-                            together with HubName.
-                          type: string
-                      type: object
-                    type: array
+                  service:
+                    description: Service is the service
+                    properties:
+                      name:
+                        description: Name is the service name.
+                        type: string
+                      namespace:
+                        description: Namespace is the service namespace.
+                        type: string
+                    required:
+                    - name
+                    - namespace
+                    type: object
                 required:
-                - reachable
+                - hubName
+                - service
                 type: object
-              override:
-                additionalProperties:
-                  description: HubSpecGateway defines the desired state of Hub
-                  properties:
-                    address:
-                      description: Address is the address of the cluster.
-                      type: string
-                    navigation:
-                      description: Navigation is the navigation of the Hub.
-                      items:
-                        description: HubSpecGatewayWay defines the desired state of
-                          HubSpecGateway
-                        properties:
-                          hubName:
-                            description: HubName is the name of Hub to proxy. cannot
-                              be specified together with Proxy.
-                            type: string
-                          proxy:
-                            description: Proxy is the proxy to use. cannot be specified
-                              together with HubName.
-                            type: string
-                        type: object
-                      type: array
-                    reachable:
-                      description: Reachable indicates that this cluster is reachable,
-                        the default unreachable.
-                      type: boolean
-                    reception:
-                      description: Reception is the reception of the Hub.
-                      items:
-                        description: HubSpecGatewayWay defines the desired state of
-                          HubSpecGateway
-                        properties:
-                          hubName:
-                            description: HubName is the name of Hub to proxy. cannot
-                              be specified together with Proxy.
-                            type: string
-                          proxy:
-                            description: Proxy is the proxy to use. cannot be specified
-                              together with HubName.
-                            type: string
-                        type: object
-                      type: array
-                  required:
-                  - reachable
-                  type: object
-                description: Override will replace the peer default gateway, key is
-                  the peer Hub
+              import:
+                description: Import is one of import of the Route.
+                properties:
+                  hubName:
+                    description: HubName is specifies the name of the Hub
+                    type: string
+                  service:
+                    description: Service is the service
+                    properties:
+                      name:
+                        description: Name is the service name.
+                        type: string
+                      namespace:
+                        description: Namespace is the service namespace.
+                        type: string
+                    required:
+                    - name
+                    - namespace
+                    type: object
+                required:
+                - hubName
+                - service
                 type: object
             required:
-            - gateway
+            - export
+            - import
             type: object
           status:
-            description: HubStatus defines the observed state of Hub
+            description: RouteStatus defines the observed state of Route
             properties:
               conditions:
                 description: Conditions current service state
@@ -214,12 +173,18 @@ spec:
                   - type
                   type: object
                 type: array
+              export:
+                description: Export is describe of the export
+                type: string
+              import:
+                description: Import is describe of the import
+                type: string
               lastSynchronizationTimestamp:
                 description: LastSynchronizationTimestamp is the last time synchronization
                 format: date-time
                 type: string
               phase:
-                description: Phase is the phase of the Hub.
+                description: Phase is the phase of the Route.
                 type: string
             type: object
         type: object

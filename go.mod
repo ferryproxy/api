@@ -1,4 +1,4 @@
-module github.com/ferry-proxy/api
+module github.com/ferryproxy/api
 
 go 1.18
 

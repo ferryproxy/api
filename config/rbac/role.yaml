@@ -6,7 +6,7 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - hubs
   verbs:
@@ -18,13 +18,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - hubs/finalizers
   verbs:
   - update
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - hubs/status
   verbs:
@@ -32,7 +32,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routepolicies
   verbs:
@@ -44,13 +44,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routepolicies/finalizers
   verbs:
   - update
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routepolicies/status
   verbs:
@@ -58,7 +58,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routes
   verbs:
@@ -70,13 +70,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routes/finalizers
   verbs:
   - update
 - apiGroups:
-  - traffic.ferry.zsm.io
+  - traffic.ferryproxy.io
   resources:
   - routes/status
   verbs:
