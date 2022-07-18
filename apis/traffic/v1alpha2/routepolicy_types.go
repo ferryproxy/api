@@ -22,9 +22,10 @@ import (
 
 // RoutePolicySpec defines the desired state of RoutePolicy
 type RoutePolicySpec struct {
-	// Exports is a list of exports of the RoutePolicy.
+	// Exports is a list of exports of the RoutePolicy
 	Exports []RoutePolicySpecRule `json:"exports"`
-	// Imports is a list of imports of the RoutePolicy.
+
+	// Imports is a list of imports of the RoutePolicy
 	Imports []RoutePolicySpecRule `json:"imports"`
 }
 
@@ -32,10 +33,13 @@ type RoutePolicySpec struct {
 type RoutePolicyStatus struct {
 	// RouteCount is the number of Route in the RoutePolicy
 	RouteCount int `json:"routeCount,omitempty"`
-	// Phase is the phase of the RoutePolicy.
+
+	// Phase is the phase of the RoutePolicy
 	Phase string `json:"phase,omitempty"`
+
 	// LastSynchronizationTimestamp is the last time synchronization
 	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
@@ -44,6 +48,7 @@ type RoutePolicyStatus struct {
 type RoutePolicySpecRule struct {
 	// HubName is specifies the name of the Hub
 	HubName string `json:"hubName"`
+
 	// Service is specifies the service of matched
 	Service RoutePolicySpecRuleService `json:"service,omitempty"`
 }
@@ -52,8 +57,10 @@ type RoutePolicySpecRule struct {
 type RoutePolicySpecRuleService struct {
 	// Labels is specifies the labels of matched
 	Labels map[string]string `json:"labels,omitempty"`
+
 	// Namespace is specifies the namespace of matched
 	Namespace string `json:"namespace,omitempty"`
+
 	// Name is specifies the name of matched
 	Name string `json:"name,omitempty"`
 }

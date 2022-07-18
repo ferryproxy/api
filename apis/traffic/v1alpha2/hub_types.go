@@ -22,45 +22,68 @@ import (
 
 // HubSpec defines the desired state of Hub
 type HubSpec struct {
-	// Gateway is the default gateway of this Hub.
+	// Gateway is the default gateway of this Hub
 	Gateway HubSpecGateway `json:"gateway"`
-	// Override will replace the peer default gateway, key is the peer Hub
+
+	// Override will replace the peer default gateway, the key is the name of peer Hub
 	Override map[string]HubSpecGateway `json:"override,omitempty"`
 }
 
 // HubStatus defines the observed state of Hub
 type HubStatus struct {
-	// Phase is the phase of the Hub.
+	// Phase is the phase of the Hub
 	Phase string `json:"phase,omitempty"`
+
 	// LastSynchronizationTimestamp is the last time synchronization
 	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
 // HubSpecGateway defines the desired state of Hub
 type HubSpecGateway struct {
-	// Reachable indicates that this cluster is reachable, the default unreachable.
+	// Reachable indicates that this Hub is reachable
 	Reachable bool `json:"reachable"`
-	// Address is the address of the cluster.
+
+	// Address is the address of this Hub,
+	// used when Reachable is true
 	Address string `json:"address,omitempty"`
-	// Navigation is the navigation of the Hub.
-	Navigation HubSpecGatewayWays `json:"navigation,omitempty"`
-	// Reception is the reception of the Hub.
-	Reception HubSpecGatewayWays `json:"reception,omitempty"`
+
+	// NavigationWay is a list of Hub names through which this Hub needs to reach other Hubs,
+	// used when this Hub reaches other Hubs,
+	// used by RoutePolicy to calculate Routes
+	NavigationWay []HubSpecGatewayWay `json:"navigationWay,omitempty"`
+
+	// ReceptionWay is a list of Hub names through which other hubs needs to reach this Hub,
+	// used when other Hubs reaches this Hub and Reachable is true,
+	// used by RoutePolicy to calculate Routes
+	ReceptionWay []HubSpecGatewayWay `json:"receptionWay,omitempty"`
+
+	// NavigationProxy is a list of proxies through which this Hub to reach other Hubs must need to go through,
+	// used when this Hub reaches other Hubs
+	NavigationProxy []HubSpecGatewayProxy `json:"navigationProxy,omitempty"`
+
+	// ReceptionProxy is a list of proxies through which other Hubs to reach this Hub must need to go through,
+	// used when other Hubs reaches this Hub and Reachable is true
+	ReceptionProxy []HubSpecGatewayProxy `json:"receptionProxy,omitempty"`
 }
 
-// HubSpecGatewayWays defines the desired state of HubSpecGateway
-type HubSpecGatewayWays []HubSpecGatewayWay
+// HubSpecGatewayProxy defines the desired state of HubSpecGateway
+type HubSpecGatewayProxy struct {
+	// HubName is the name of Hub to proxy,
+	// cannot be specified together with Proxy
+	HubName string `json:"hubName,omitempty"`
+
+	// Proxy is the proxy to use,
+	// cannot be specified together with HubName
+	Proxy string `json:"proxy,omitempty"`
+}
 
 // HubSpecGatewayWay defines the desired state of HubSpecGateway
 type HubSpecGatewayWay struct {
-	// HubName is the name of Hub to proxy.
-	// cannot be specified together with Proxy.
-	HubName string `json:"hubName,omitempty"`
-	// Proxy is the proxy to use.
-	// cannot be specified together with HubName.
-	Proxy string `json:"proxy,omitempty"`
+	// HubName is the name of Hub
+	HubName string `json:"hubName"`
 }
 
 // +genclient
