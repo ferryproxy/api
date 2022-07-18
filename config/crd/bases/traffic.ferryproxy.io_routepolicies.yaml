@@ -49,7 +49,7 @@ spec:
             description: RoutePolicySpec defines the desired state of RoutePolicy
             properties:
               exports:
-                description: Exports is a list of exports of the RoutePolicy.
+                description: Exports is a list of exports of the RoutePolicy
                 items:
                   description: RoutePolicySpecRule defines the desired import of RoutePolicySpec
                   properties:
@@ -76,7 +76,7 @@ spec:
                   type: object
                 type: array
               imports:
-                description: Imports is a list of imports of the RoutePolicy.
+                description: Imports is a list of imports of the RoutePolicy
                 items:
                   description: RoutePolicySpecRule defines the desired import of RoutePolicySpec
                   properties:
@@ -183,7 +183,7 @@ spec:
                 format: date-time
                 type: string
               phase:
-                description: Phase is the phase of the RoutePolicy.
+                description: Phase is the phase of the RoutePolicy
                 type: string
               routeCount:
                 description: RouteCount is the number of Route in the RoutePolicy
