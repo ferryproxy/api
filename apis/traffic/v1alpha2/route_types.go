@@ -22,22 +22,30 @@ import (
 
 // RouteSpec defines the desired state of Route
 type RouteSpec struct {
-	// Import is one of import of the Route.
+	// Import is one of import of the Route
 	Import RouteSpecRule `json:"import"`
-	// Export is one of export of the Route.
+
+	// Export is one of export of the Route
 	Export RouteSpecRule `json:"export"`
 }
 
 // RouteStatus defines the observed state of Route
 type RouteStatus struct {
+	// Way is describe of the way
+	Way string `json:"way,omitempty"`
+
 	// Export is describe of the export
 	Export string `json:"export,omitempty"`
+
 	// Import is describe of the import
 	Import string `json:"import,omitempty"`
-	// Phase is the phase of the Route.
+
+	// Phase is the phase of the Route
 	Phase string `json:"phase,omitempty"`
+
 	// LastSynchronizationTimestamp is the last time synchronization
 	LastSynchronizationTimestamp metav1.Time `json:"lastSynchronizationTimestamp,omitempty"`
+
 	// Conditions current service state
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
@@ -46,15 +54,17 @@ type RouteStatus struct {
 type RouteSpecRule struct {
 	// HubName is specifies the name of the Hub
 	HubName string `json:"hubName"`
+
 	// Service is the service
 	Service RouteSpecRuleService `json:"service"`
 }
 
 // RouteSpecRuleService  defines the desired state of RouteSpecRule
 type RouteSpecRuleService struct {
-	// Name is the service name.
+	// Name is the service name
 	Name string `json:"name"`
-	// Namespace is the service namespace.
+
+	// Namespace is the service namespace
 	Namespace string `json:"namespace"`
 }
 
@@ -62,6 +72,7 @@ type RouteSpecRuleService struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 //+kubebuilder:printcolumn:name="export",type="string",JSONPath=".status.export"
+//+kubebuilder:printcolumn:name="way",type="string",JSONPath=".status.way"
 //+kubebuilder:printcolumn:name="import",type="string",JSONPath=".status.import"
 //+kubebuilder:printcolumn:name="status",type="string",JSONPath=".status.phase"
 //+kubebuilder:printcolumn:name="last-synchronization",type="date",JSONPath=".status.lastSynchronizationTimestamp"

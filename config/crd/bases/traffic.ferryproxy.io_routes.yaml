@@ -19,6 +19,9 @@ spec:
     - jsonPath: .status.export
       name: export
       type: string
+    - jsonPath: .status.way
+      name: way
+      type: string
     - jsonPath: .status.import
       name: import
       type: string
@@ -52,7 +55,7 @@ spec:
             description: RouteSpec defines the desired state of Route
             properties:
               export:
-                description: Export is one of export of the Route.
+                description: Export is one of export of the Route
                 properties:
                   hubName:
                     description: HubName is specifies the name of the Hub
@@ -61,10 +64,10 @@ spec:
                     description: Service is the service
                     properties:
                       name:
-                        description: Name is the service name.
+                        description: Name is the service name
                         type: string
                       namespace:
-                        description: Namespace is the service namespace.
+                        description: Namespace is the service namespace
                         type: string
                     required:
                     - name
@@ -75,7 +78,7 @@ spec:
                 - service
                 type: object
               import:
-                description: Import is one of import of the Route.
+                description: Import is one of import of the Route
                 properties:
                   hubName:
                     description: HubName is specifies the name of the Hub
@@ -84,10 +87,10 @@ spec:
                     description: Service is the service
                     properties:
                       name:
-                        description: Name is the service name.
+                        description: Name is the service name
                         type: string
                       namespace:
-                        description: Namespace is the service namespace.
+                        description: Namespace is the service namespace
                         type: string
                     required:
                     - name
@@ -184,7 +187,10 @@ spec:
                 format: date-time
                 type: string
               phase:
-                description: Phase is the phase of the Route.
+                description: Phase is the phase of the Route
+                type: string
+              way:
+                description: Way is describe of the way
                 type: string
             type: object
         type: object
