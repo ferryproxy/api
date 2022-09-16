@@ -44,6 +44,11 @@ type RoutePolicyStatus struct {
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+const (
+	// RoutePolicyReady means the RoutePolicy have been converted to Routes
+	RoutePolicyReady = "Ready"
+)
+
 // RoutePolicySpecRule defines the desired import of RoutePolicySpec
 type RoutePolicySpecRule struct {
 	// HubName is specifies the name of the Hub

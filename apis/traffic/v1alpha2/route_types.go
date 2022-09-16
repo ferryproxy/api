@@ -50,6 +50,26 @@ type RouteStatus struct {
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+const (
+	// ExportHubReadyCondition means the Hub of export is ready.
+	ExportHubReadyCondition = "ExportHubReady"
+
+	// ImportHubReadyCondition means the Hub of export is ready.
+	ImportHubReadyCondition = "ImportHubReady"
+
+	// PortsAllocatedCondition means ports has been allocated to it in the Tunnel.
+	PortsAllocatedCondition = "PortsAllocated"
+
+	// PathReachableCondition means path of the Route is reachable.
+	PathReachableCondition = "PathReachable"
+
+	// RouteSyncedCondition means the Route is synced to tunnel.
+	RouteSyncedCondition = "Synced"
+
+	// RouteReady means the Route is able to service requests.
+	RouteReady = "Ready"
+)
+
 // RouteSpecRule  defines the desired state of RouteSpec
 type RouteSpecRule struct {
 	// HubName is specifies the name of the Hub

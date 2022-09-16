@@ -41,6 +41,17 @@ type HubStatus struct {
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+const (
+	// ConnectedCondition means that Controller can connect to the Apiserver
+	ConnectedCondition = "Connected"
+
+	// TunnelHealthCondition means the Tunnel is healthy
+	TunnelHealthCondition = "TunnelHealth"
+
+	// HubReady means the hub is able to service.
+	HubReady = "Ready"
+)
+
 // HubSpecGateway defines the desired state of Hub
 type HubSpecGateway struct {
 	// Reachable indicates that this Hub is reachable
