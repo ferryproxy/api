@@ -77,6 +77,9 @@ type RouteSpecRule struct {
 
 	// Service is the service
 	Service RouteSpecRuleService `json:"service"`
+
+	// The list of ports that are exposed by export service.
+	Ports []RouteSpecRulePort `json:"ports,omitempty"`
 }
 
 // RouteSpecRuleService  defines the desired state of RouteSpecRule
@@ -86,6 +89,15 @@ type RouteSpecRuleService struct {
 
 	// Namespace is the service namespace
 	Namespace string `json:"namespace"`
+}
+
+// RouteSpecRulePort contains information on service's port.
+type RouteSpecRulePort struct {
+	// The name of this port within the service.
+	Name string `json:"name,omitempty"`
+
+	// The port that will be exposed by this service.
+	Port int32 `json:"port"`
 }
 
 // +genclient
